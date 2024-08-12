@@ -18,52 +18,50 @@ export default function ListEvents({ events }: ListEvents) {
       </S.Header>
 
       {events?.length ? (
-        <>
-          {events.map((event) => (
-            <S.Field key={event?.id}>
-              <Typography
-                sx={{ fontWeight: "600", color: "gray", fontSize: "1.2rem" }}
-              >
-                {event?.data}
+        events.map((event) => (
+          <S.Field key={event?.id}>
+            <Typography
+              sx={{ fontWeight: "600", color: "gray", fontSize: "1.2rem" }}
+            >
+              {event?.data}
+            </Typography>
+
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                gap: "0.5rem",
+                alignItems: "center",
+              }}
+            >
+              <Typography sx={{ fontWeight: "400", fontSize: "0.8rem" }}>
+                {event?.nome}
               </Typography>
 
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: "0.5rem",
-                  alignItems: "center",
-                }}
-              >
-                <Typography sx={{ fontWeight: "400", fontSize: "0.8rem" }}>
-                  {event?.nome}
+              {event?.eventoToday ? (
+                <Typography
+                  sx={{
+                    fontWeight: "400",
+                    fontSize: "0.7rem",
+                    color: "#18FA05",
+                  }}
+                >
+                  Acontece Hoje
                 </Typography>
-
-                {event?.eventoToday ? (
-                  <Typography
-                    sx={{
-                      fontWeight: "400",
-                      fontSize: "0.7rem",
-                      color: "#18FA05",
-                    }}
-                  >
-                    Acontece Hoje
-                  </Typography>
-                ) : (
-                  <Typography
-                    sx={{
-                      fontWeight: "400",
-                      fontSize: "0.7rem",
-                      color: event?.eventoAtrasado ? "#FA1105" : "#9c9a9a",
-                    }}
-                  >
-                    {event?.status}
-                  </Typography>
-                )}
-              </Box>
-            </S.Field>
-          ))}
-        </>
+              ) : (
+                <Typography
+                  sx={{
+                    fontWeight: "400",
+                    fontSize: "0.7rem",
+                    color: event?.eventoAtrasado ? "#FA1105" : "#9c9a9a",
+                  }}
+                >
+                  {event?.status}
+                </Typography>
+              )}
+            </Box>
+          </S.Field>
+        ))
       ) : (
         <Typography>Você não possui eventos no momento.</Typography>
       )}

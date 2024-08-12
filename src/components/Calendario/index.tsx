@@ -1,5 +1,10 @@
 import { Box, useMediaQuery, useTheme } from "@mui/material";
-import { compareAsc, format, formatDistanceStrict } from "date-fns";
+import {
+  compareAsc,
+  compareDesc,
+  format,
+  formatDistanceStrict,
+} from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { useEffect, useState } from "react";
 import { itens } from "../../shared";
@@ -42,7 +47,13 @@ export default function Calendario() {
         (evento) => new Date(evento?.data).getFullYear() === year
       );
 
-      const formatEvents = splitForYear.map((evento) => {
+      const orderItemsByLatest = splitForYear?.length
+        ? splitForYear?.sort((a, b) =>
+            compareDesc(new Date(a?.data), new Date(b?.data))
+          )
+        : [];
+
+      const formatEvents = orderItemsByLatest.map((evento) => {
         const mesEvento = evento?.data ? new Date(evento?.data).getMonth() : 0;
         const diaEvento = evento?.data ? new Date(evento?.data).getDate() : 0;
         eventsOfYearCurrent[mesEvento].push(diaEvento);
